@@ -8,6 +8,7 @@
             type="com.example.swipetask.data.model.Product" />
 
     </data>
+
     <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
@@ -15,73 +16,73 @@
         android:layout_margin="5dp"
         app:cardCornerRadius="10dp">
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="0dp">
 
             <ImageView
                 android:id="@+id/ivProduct"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:padding="2dp" />
-
-            <TextView
-                android:id="@+id/tvPrice"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_height="100dp"
                 android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/ivProduct"
-                android:text="@{product.price}"
-                android:textColor="#000"
-                android:textSize="15sp" />
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:padding="2dp"
+                android:src="@drawable/logo"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvName" />
 
             <TextView
                 android:id="@+id/tvName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvPrice"
-                android:layout_marginStart="10dp"
+                android:text='@{product.productName ?? "Book", default = "Book"  }'
+                android:textAppearance="@style/TextAppearance.Swipe.Toolbar"
+                android:textColor="#000"
+                android:layout_marginTop="5dp"
+                android:textSize="20sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_toEndOf="@+id/ivProduct"
-                android:layout_toRightOf="@+id/ivProduct"
-                android:text="@{product.productName}"
+                android:text='@{product.price != null ? "Price : "+product.price : "1$", default = "1$"  }'
                 android:textColor="#000"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/tvType"
+                app:layout_constraintTop_toBottomOf="@id/ivProduct" />
 
             <TextView
                 android:id="@+id/tvType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvName"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_toEndOf="@+id/ivProduct"
-                android:layout_toRightOf="@+id/ivProduct"
-                android:text="@{product.productType}"
+                android:text='@{product.productType ?? "" , default = "Product" }'
                 android:textColor="#000"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                app:layout_constraintLeft_toRightOf="@id/tvPrice"
+                app:layout_constraintRight_toLeftOf="@id/tvTax"
+                app:layout_constraintTop_toTopOf="@id/tvPrice" />
 
             <TextView
                 android:id="@+id/tvTax"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvType"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_toEndOf="@+id/ivProduct"
-                android:layout_toRightOf="@+id/ivProduct"
-                android:text="@{product.tax}"
+                android:text='@{product.tax != null ? "Tax : "+product.tax : "1$", default = "1$"  }'
                 android:textColor="#000"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                app:layout_constraintLeft_toRightOf="@id/tvType"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvPrice" />
 
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
 

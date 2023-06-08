@@ -1,4 +1,4 @@
-package com.example.swipetask.data.screens.common.viewsmvc
+package com.example.swipetask.screens.common.viewsmvc
 
 import android.content.Context
 import android.view.LayoutInflater
