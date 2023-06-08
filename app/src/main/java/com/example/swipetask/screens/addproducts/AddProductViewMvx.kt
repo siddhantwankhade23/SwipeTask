@@ -3,11 +3,13 @@ package com.example.swipetask.screens.addproducts
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.ImageView
 import com.example.swipetask.R
 import com.example.swipetask.data.model.AddProductRequest
 import com.example.swipetask.screens.common.viewsmvc.BaseViewMvc
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputEditText
 import java.io.File
 
@@ -29,10 +31,10 @@ class AddProductViewMvx(
 
     private var ivImage: ImageView
     private val etName: TextInputEditText
-    private val etType: TextInputEditText
+    private val etType: MaterialAutoCompleteTextView
     private val etSellingPrice: TextInputEditText
     private val etTaxRate: TextInputEditText
-    private lateinit var capturedImage: File
+    private var capturedImage: File? = null
 
     init {
         etName = findViewById(R.id.et_name)
@@ -40,6 +42,10 @@ class AddProductViewMvx(
         etSellingPrice = findViewById(R.id.et_price)
         etTaxRate = findViewById(R.id.etTaxRate)
         ivImage = findViewById(R.id.ivImage)
+
+        val productType = arrayOf("Product","Service")
+        val arrayAdapter = ArrayAdapter(rootView.context,R.layout.layout_dropdown_menu,productType)
+        etType.setAdapter(arrayAdapter)
 
         ivImage.setOnClickListener {
             for (listener in listeners) {
@@ -91,15 +97,15 @@ class AddProductViewMvx(
             return false
         }
         if (etType.text.toString().isBlank()) {
-            etName.error = context.getString(R.string.please_enter_product_type)
+            etType.error = context.getString(R.string.please_enter_product_type)
             return false
         }
         if (etSellingPrice.text.toString().isBlank()) {
-            etName.error = context.getString(R.string.please_enter_product_price)
+            etSellingPrice.error = context.getString(R.string.please_enter_product_price)
             return false
         }
         if (etTaxRate.text.toString().isBlank()) {
-            etName.error = context.getString(R.string.please_enter_product_tax_rate)
+            etTaxRate.error = context.getString(R.string.please_enter_product_tax_rate)
             return false
         }
 

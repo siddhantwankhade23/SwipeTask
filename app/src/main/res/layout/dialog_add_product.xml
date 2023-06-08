@@ -18,7 +18,6 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimaryDark"
                 app:layout_constraintTop_toTopOf="parent"
-
                 android:gravity="center"
                 android:padding="20dp"
                 android:text="@string/add_product"
@@ -40,15 +39,18 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/et_type_layout"
-                style="@style/Widget.Swipe.TextInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/product_type"
-                app:layout_constraintTop_toBottomOf="@id/et_name">
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:hint="@string/product_type">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/et_type"
                     android:layout_width="match_parent"
+                    android:inputType="none"
                     android:layout_height="wrap_content" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -58,8 +60,7 @@
                 style="@style/Widget.Swipe.TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/selling_price"
-                app:layout_constraintTop_toBottomOf="@id/et_type">
+                android:hint="@string/selling_price">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_price"
@@ -74,8 +75,7 @@
                 style="@style/Widget.Swipe.TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/tax_rate"
-                app:layout_constraintTop_toBottomOf="@id/et_price">
+                android:hint="@string/tax_rate">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etTaxRate"
