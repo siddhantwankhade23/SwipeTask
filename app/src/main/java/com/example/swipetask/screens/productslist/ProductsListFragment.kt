@@ -30,7 +30,7 @@ class ProductsListFragment : Fragment(), ProductsListViewMvx.Listener {
     ): View? {
 
         viewMvc = ProductsListViewMvx(layoutInflater,null)
-
+        (activity as AppCompatActivity).setSupportActionBar(viewMvc.rootView.findViewById(R.id.app_bar))
         return viewMvc.rootView
     }
 
@@ -38,7 +38,7 @@ class ProductsListFragment : Fragment(), ProductsListViewMvx.Listener {
         super.onViewCreated(view, savedInstanceState)
 
         val menuHost: MenuHost = requireActivity()
-        viewMvc.createOptionsMenu(menuHost)
+        viewMvc.createOptionsMenu(menuHost,this)
     }
 
     override fun onStart() {
@@ -67,4 +67,5 @@ class ProductsListFragment : Fragment(), ProductsListViewMvx.Listener {
         val addProductDialog = AddProductDialog()
         addProductDialog.show(childFragmentManager,null)
     }
+
 }
