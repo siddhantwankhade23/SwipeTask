@@ -2,6 +2,7 @@ package com.example.swipetask.screens.addproducts
 
 import android.net.Uri
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
@@ -9,6 +10,7 @@ import com.example.swipetask.R
 import com.example.swipetask.data.model.AddProductRequest
 import com.example.swipetask.screens.common.viewsmvc.BaseViewMvc
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputEditText
 import java.io.File
@@ -35,6 +37,7 @@ class AddProductViewMvx(
     private val etSellingPrice: TextInputEditText
     private val etTaxRate: TextInputEditText
     private var capturedImage: File? = null
+    private val progressIndicator : CircularProgressIndicator
 
     init {
         etName = findViewById(R.id.et_name)
@@ -42,6 +45,7 @@ class AddProductViewMvx(
         etSellingPrice = findViewById(R.id.et_price)
         etTaxRate = findViewById(R.id.etTaxRate)
         ivImage = findViewById(R.id.ivImage)
+        progressIndicator = findViewById(R.id.progressIndicator)
 
         val productType = arrayOf("Product","Service")
         val arrayAdapter = ArrayAdapter(rootView.context,R.layout.layout_dropdown_menu,productType)
@@ -110,5 +114,13 @@ class AddProductViewMvx(
         }
 
         return true
+    }
+
+    fun showProgressIndication() {
+        progressIndicator.visibility = View.VISIBLE
+    }
+
+    fun hideProgressIndication() {
+        progressIndicator.visibility = View.GONE
     }
 }

@@ -13,34 +13,36 @@ import androidx.fragment.app.DialogFragment
 import com.example.swipetask.data.model.AddProductRequest
 import com.example.swipetask.viewmodels.ProductsViewModel
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class AddProductDialog : DialogFragment(), AddProductViewMvx.Listener {
 
     private lateinit var startForImageResult: ActivityResultLauncher<Intent>
-    private val productViewModel : ProductsViewModel by activityViewModel()
+    private val productViewModel: ProductsViewModel by activityViewModel()
     private lateinit var viewMvx: AddProductViewMvx
-    private lateinit var onImageSelected : (uri: Uri) -> Unit
+    private lateinit var onImageSelected: (uri: Uri) -> Unit
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
         val dialog = Dialog(requireContext())
 
-        viewMvx = AddProductViewMvx(layoutInflater,null)
+        viewMvx = AddProductViewMvx(layoutInflater, null)
         dialog.setContentView(viewMvx.rootView)
 
-        startForImageResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            val resultCode = result.resultCode
-            val data = result.data
+        startForImageResult =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+                val resultCode = result.resultCode
+                val data = result.data
 
-            if (resultCode == Activity.RESULT_OK) {
-                //Image Uri will not be null for RESULT_OK
-                val fileUri = data?.data!!
+                if (resultCode == Activity.RESULT_OK) {
+                    //Image Uri will not be null for RESULT_OK
+                    val fileUri = data?.data!!
 
-                onImageSelected(fileUri)
+                    onImageSelected(fileUri)
+                }
             }
-        }
 
         return dialog
     }
@@ -48,6 +50,11 @@ class AddProductDialog : DialogFragment(), AddProductViewMvx.Listener {
     override fun onStart() {
         super.onStart()
         viewMvx.registerListener(this)
+
+        productViewModel.errorMessage.observe(this) {
+            viewMvx.hideProgressIndication()
+            Toast.makeText(context, it, Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun onStop() {
@@ -56,13 +63,15 @@ class AddProductDialog : DialogFragment(), AddProductViewMvx.Listener {
     }
 
     override fun onAddProductClicked(addProductRequest: AddProductRequest) {
-        productViewModel.productsAddedResponse.observe(this){
-            Toast.makeText(viewMvx.rootView.context,it.message, Toast.LENGTH_LONG).show()
-            if (it.success){
+        productViewModel.productsAddedResponse.observe(this) {
+            Toast.makeText(viewMvx.rootView.context, it.message, Toast.LENGTH_LONG).show()
+            viewMvx.hideProgressIndication()
+            if (it.success) {
                 dismiss()
             }
         }
 
+        viewMvx.showProgressIndication()
         productViewModel.addProducts(addProductRequest)
     }
 
@@ -80,7 +89,6 @@ class AddProductDialog : DialogFragment(), AddProductViewMvx.Listener {
             }
 
     }
-
 
 
 }
