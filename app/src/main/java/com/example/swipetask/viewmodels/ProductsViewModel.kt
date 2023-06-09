@@ -31,7 +31,6 @@ class ProductsViewModel(
     fun fetchProducts() {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
-                delay(5000)
                 when (val networkResult = productRemoteRepository.getProducts()) {
                     is NetworkResult.Success -> _productsList.value = networkResult.data
                     is NetworkResult.Error -> _errorMessage.value = networkResult.message
@@ -45,7 +44,6 @@ class ProductsViewModel(
     fun addProducts(addProductRequest: AddProductRequest) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
-                delay(5000)
                 when (val networkResult = productRemoteRepository.addProduct(addProductRequest)) {
                     is NetworkResult.Success -> _productsAddedResponse.value = networkResult.data
                     is NetworkResult.Error -> _errorMessage.value = networkResult.message
