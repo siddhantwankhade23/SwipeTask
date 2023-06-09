@@ -15,6 +15,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.example.swipetask.R
 import com.example.swipetask.data.model.Product
 import com.example.swipetask.screens.common.viewsmvc.BaseViewMvc
@@ -34,6 +36,7 @@ class ProductsListViewMvx(
 
     interface Listener {
         fun onAddProductClicked()
+        fun onSwipeRefresh()
     }
 
     private val fabAddProduct: FloatingActionButton
@@ -41,8 +44,16 @@ class ProductsListViewMvx(
     private val recyclerView: RecyclerView
     private val productsAdapter: ProductsAdapter
     private lateinit var productList : List<Product>
+    private val mSwipeRefreshLayout : SwipeRefreshLayout
 
     init {
+        mSwipeRefreshLayout = findViewById(R.id.swipeRefresh)
+        mSwipeRefreshLayout.setOnRefreshListener {
+            for (listener in listeners) {
+                listener.onSwipeRefresh()
+            }
+            mSwipeRefreshLayout.isRefreshing = false
+        }
 
         fabAddProduct = findViewById(R.id.floating_action_button)
         fabAddProduct.setOnClickListener {
@@ -91,7 +102,6 @@ class ProductsListViewMvx(
 
                 for (item in productList) {
                     item.productName?.let {
-                        Log.d("Siddhant"," "+it+" : "+text.lowercase(Locale.getDefault()))
                         if (it.lowercase().contains(text.lowercase(Locale.getDefault()))) {
                             filteredlist.add(item)
                         }

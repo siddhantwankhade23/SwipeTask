@@ -74,4 +74,7 @@ class ProductsListFragment : Fragment(), ProductsListViewMvx.Listener {
         addProductDialog.show(childFragmentManager,null)
     }
 
+    override fun onSwipeRefresh() {
+        fetchProducts()
+    }
 }
